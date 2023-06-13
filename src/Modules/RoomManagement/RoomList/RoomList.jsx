@@ -130,15 +130,15 @@ function RoomList() {
                         <thead>
                             <tr>
                                 <th scope='col'>#</th>
-                                <th scope='col-2'>Tên Phòng</th>
+                                <th scope='col'>Tên Phòng</th>
                                 <th scope='col'>ID</th>
                                 <th scope='col'>Số khách</th>
-                                <th scope='col-2'>phòng ngủ - giường</th>
+                                <th scope='col'>phòng ngủ - giường</th>
                                 <th scope='col'>phòng tắm</th>
-                                <th scope='col-4'>Mô tả</th>
+                                <th scope='col'>Mô tả</th>
                                 <th scope='col'>Giá tiền</th>
-                                <th scope='col-4'>Tiện ích</th>
-                                <th scope='col-4'>Vị trí</th>
+                                <th scope='col'>Tiện ích</th>
+                                <th scope='col'>Vị trí</th>
                                 <th scope='col'>Hình ảnh</th>
                                 <th scope='col'>Action</th>
                             </tr>
