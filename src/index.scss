@@ -1,0 +1,156 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$primary-color : #ff395c;
+$dark-color : #222222;
+$text-color : #717171;
+$white-color : #ffffff;
+$boder-color : #dddddd;
+$bg-light-color: #ebebeb;
+
+$custom-colors: (
+    'primary-color' : $primary-color,
+    'dark-color' : $primary-color,
+    'text-color' : $text-color,
+    'white-color' : $white-color,
+    'boder-color' : $boder-color,
+    'bg-light-color': $bg-light-color,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$all-colors: map-merge-multiple($blues, $indigos, $purples, $pinks, $reds, $oranges, $yellows, $greens, $teals, $cyans);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "color": map-merge(
+      map-get($utilities, "color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "color"), "values"),
+          (
+            $all-colors
+          ),
+        ),
+      ),
+    ),
+  )
+);
+
+@import "bootstrap/scss/utilities/api";
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-color);
+    color: var(--font-color);
+    font-family: font-movies, 'Quicksand', sans-serif
+}
+
+a{
+    all: unset;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover{
+      color: inherit;
+    }
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+.btnPrimary{
+  background-size: 200% 200%;
+  transition: all 1.5s;
+  background-image: radial-gradient( circle at center,#FF385C 0%,#e61e4d 27.5%,#e31c5f 40%,#d70466 57.5%,#bd1e59 75%,#bd1e59 100% );
+  color: $bg-light-color;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  &:hover {
+    opacity: 1;
+    color: $white-color;
+    background-size: 100%;
+  }
+}
+
+.title {
+  text-align: center;
+  color: $bg-light-color;
+  background-image: radial-gradient( circle at center,#FF385C 0%,#e61e4d 27.5%,#e31c5f 40%,#d70466 57.5%,#bd1e59 75%,#bd1e59 100% );
+  padding: 1rem 0;
+}
+
+.itemPagination{
+  border: none;
+  margin: 0 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  background-color: inherit;
+  color: $primary-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  &:hover{
+      background-color: $primary-color;
+      color: $bg-light-color;
+  }
+}
+
+.pagination{
+  display: flex;
+  justify-content: end;
+  .rc-pagination-prev{
+      .rc-pagination-item-link{
+          @extend .itemPagination;
+          &::after{
+              content: '<';
+          }
+      }
+      }
+  .rc-pagination-next{
+      .rc-pagination-item-link{
+          @extend .itemPagination;
+          &::after{
+              content: '>';
+          }
+      }
+  }
+  .rc-pagination-jump-next,
+  .rc-pagination-jump-prev{
+      .rc-pagination-item-link{
+          @extend .itemPagination;
+          &::after{
+              content: '...';
+          }
+      }
+  }
+  .rc-pagination-item{
+      @extend .itemPagination;
+  }
+  .rc-pagination-item-active{
+      background-color: $primary-color !important;
+      color: $bg-light-color !important;
+  }
+}

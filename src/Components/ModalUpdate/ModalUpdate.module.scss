@@ -1,0 +1,17 @@
+@import '../../index.scss';
+
+.formBody{
+    .input{
+        margin-bottom: 1rem;
+        span, input, select{
+            color: $text-color;
+        }
+        span {
+            width: 30%;
+        }
+    }
+}
+
+.btnPrimary{
+    @extend .btnPrimary;
+}

@@ -1,0 +1,68 @@
+@import '../../index.scss';
+
+.adminHeader{
+    height: 80px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $boder-color;
+    position: sticky;
+    top: 0;
+    background-color: $white-color;
+    z-index: 10;
+    // .dropdownMenu{
+    //     display: none;
+    // }
+    // .show{
+    //     overflow: hidden;
+    //     display: block !important;
+    // }
+    .btnInfo{
+        padding: 5px 5px 5px 12px;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid $boder-color;
+        border-radius: 21px;
+        background-color: inherit;
+        color: $dark-color;
+        position: relative;
+        i{
+            font-size: 1.25rem;
+        }
+        &:hover{
+            box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+        }
+        .nameAvatar{
+            background-color: $dark-color;
+            color: $bg-light-color;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            font-size: 1.25rem;
+            overflow: hidden;
+        }
+    }
+    .dropDown{
+        position: absolute;
+        margin-top: 2.5rem;
+        list-style: none;
+        width: 14rem;
+        text-align: left;
+        padding: 0.5rem 0;
+        right: 0;
+        border: 1px solid $boder-color;
+        border-radius: 21px;
+        background-color: $white-color;
+        overflow: hidden;
+        li{
+            color: $text-color ;
+            padding: 0.5rem 1rem;
+            &:hover{
+                background-color: $bg-light-color;
+            }
+        }
+    }
+}

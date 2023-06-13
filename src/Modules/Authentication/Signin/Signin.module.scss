@@ -1,0 +1,11 @@
+@import '../../../index.scss';
+
+.btnPrimary {
+    @extend .btnPrimary;
+    margin-top: 1rem;
+    width: 100%;
+}
+.signin{
+    height: calc(60vh - 80px);
+    align-items: center;
+}

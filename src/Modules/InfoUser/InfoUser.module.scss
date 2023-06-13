@@ -1,0 +1,17 @@
+@import '../../index.scss';
+
+.infoUser{
+    width: 100%;
+    .right{
+        .table{
+            td{
+                color: $text-color;
+            }
+        }
+    }
+    
+    .left{
+        left: 0;
+    }
+}
+

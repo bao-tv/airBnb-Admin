@@ -1,0 +1,73 @@
+@import '../../index.scss';
+
+.adminSidebar{
+    height: calc(100vh - 80px);
+    border-right: 1px solid $boder-color;
+    width: 25rem;
+    position: sticky;
+    left: 0;
+    top: 80px;
+    .userPage {
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: $bg-light-color;
+            font-size: 1.5rem;
+            font-weight: 600;
+            &::before {
+                content: "";
+                border-left: 2px solid $boder-color;
+                position: absolute;
+                right: -11%;
+                top: calc(50% - 10px);
+                width: 0;
+                height: 20px;
+            };
+        }
+        span{
+            font-size: 20px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    }
+    .footer{
+        margin-top: 20px;
+        list-style: none;
+        padding-left: 0rem;
+        color: $text-color;
+        .footerItem{
+            
+            padding: 10px;
+            font-size: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            .icon{
+                transform: rotate(90deg);
+                transition: all 0.35s;
+            }
+        }
+        .action{
+            background-color: $bg-light-color;
+            border-radius: 1rem;
+            border: 1px solid $boder-color;
+        }
+        .listItem{
+            .listItemDetail{
+                padding: 10px 0;
+                color: $dark-color;
+                opacity: 0.6;
+                cursor: pointer;
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}

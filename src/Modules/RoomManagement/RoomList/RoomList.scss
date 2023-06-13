@@ -1,0 +1,15 @@
+@import '../../../index.scss';
+
+.roomList{
+    .title {
+        @extend .title;
+    }
+    .body{
+        font-size: 10px;
+        .table{
+            th, td {
+                color: $text-color;
+            }
+        }
+    }
+}
