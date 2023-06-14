@@ -147,7 +147,7 @@ function RoomList() {
                             {roomList?.data?.map((room, index) => {
                                 return(
                                     <tr key={index}>
-                                        <td>{(current - 1)*10 + index+1}</td>
+                                        <th scope="row">{(current - 1)*10 + index+1}</th>
                                         <td>{room.tenPhong}</td>
                                         <td>{room.id}</td>
                                         <td>{room.khach}</td>

@@ -121,6 +121,7 @@ p{
 .pagination{
   display: flex;
   justify-content: end;
+  font-size: 14px;
   .rc-pagination-prev{
       .rc-pagination-item-link{
           @extend .itemPagination;
