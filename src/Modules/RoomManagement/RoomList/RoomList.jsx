@@ -40,7 +40,7 @@ function RoomList() {
       }, []);
 
     const onSubmit = async (value) => {
-        console.log(value);
+        // console.log(value);
         try {
             let data = null;
             if(show.key === 'update') {data = await apiUpdateRoom(value)}
@@ -93,7 +93,7 @@ function RoomList() {
                 icon: "error",
                 confirmButtonColor:'#ff395c',
             });
-            navigate(0);
+            // navigate(0);
         }
     }
 
@@ -124,20 +124,20 @@ function RoomList() {
             <button className='btnPrimary' onClick={() => handleAddPhong()}>Thêm phòng</button>
         </div>
         <div className="body">
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row">
                     <table className='table table-hover table-bordered w-100'>
                         <thead>
                             <tr>
                                 <th scope='col'>#</th>
-                                <th scope='col'>Tên Phòng</th>
+                                <th scope='col' style={{width: '10%'}}>Tên Phòng</th>
                                 <th scope='col'>ID</th>
                                 <th scope='col'>Số khách</th>
                                 <th scope='col'>phòng ngủ - giường</th>
                                 <th scope='col'>phòng tắm</th>
-                                <th scope='col'>Mô tả</th>
+                                <th scope='col' style={{width: '20%'}}>Mô tả</th>
                                 <th scope='col'>Giá tiền</th>
-                                <th scope='col'>Tiện ích</th>
+                                <th scope='col' style={{width: '7%'}}>Tiện ích</th>
                                 <th scope='col'>Vị trí</th>
                                 <th scope='col'>Hình ảnh</th>
                                 <th scope='col'>Action</th>
@@ -171,11 +171,12 @@ function RoomList() {
                                             ', ' +locationList.filter(item => item.id === room?.maViTri)[0]?.quocGia
                                             }
                                         </td>
-                                        <td><img src={room.hinhAnh} alt="" srcset="" style={{width:'200px'}}/></td>
+                                        <td><img src={room.hinhAnh} alt="" srcset={room.hinhAnh}style={{width:'200px'}}/></td>
                                         <td>
                                             <button onClick={() => handleUpdate(room)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
                                             <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button>
                                             <button onClick={() => handleRemove(room.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
+                                            <button onClick={() => navigate(`/comment?roomID=${room.id}`)} className='btn text-danger'> <i className="bi bi-chat-dots"></i></button>
                                         </td>
                                     </tr>
                                 )

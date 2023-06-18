@@ -102,7 +102,7 @@ function Location() {
     }
     
     return (
-    <div className='location'>
+    <div className='location w-100'>
         <div className="d-flex justify-content-around">
             <div className="input-group w-50">
             <input 
@@ -115,7 +115,7 @@ function Location() {
             <button className='btnPrimary' onClick={handleAddVitri}>Thêm Vị trí</button>
         </div>
         <div className="body">
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row">
                     <table className='table'>
                         <thead>

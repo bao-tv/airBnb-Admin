@@ -1,5 +1,10 @@
 import axiosClient from "./axiosClient";
 
+export const apiAllRoomList = async () => {
+    const {data} = await axiosClient.get("/phong-thue");
+    return data;
+};
+
 export const apiRoomList = async (value) => {
     const {data} = await axiosClient.get(`/phong-thue/phan-trang-tim-kiem?pageIndex=${value}&pageSize=10`);
     return data;

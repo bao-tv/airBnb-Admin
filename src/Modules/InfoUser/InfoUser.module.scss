@@ -1,11 +1,29 @@
 @import '../../index.scss';
+.table{
+    tr{
+        color: $text-color;
+        font-size: 10px;
+    }
+    td{
+        padding: 0rem 0.5rem;
+        color: $text-color;
+        font-size: 12px;
+    }
+    th{
+        color: $primary-color;
+        font-size: 12px;
+    }
+}
 
 .infoUser{
     width: 100%;
     .right{
-        .table{
+        width: 100%;
+        .table {
+            @extend .table;
             td{
-                color: $text-color;
+                padding: 0.5rem 0.5rem;
+                font-size: 16px !important;
             }
         }
     }

@@ -26,3 +26,10 @@ export const apiRemoveUser = async (id) => {
     const data = await axiosClient.delete(`/users?id=${id}`);
     return data;
 }
+
+export const apiUpdateImgUser = async (file) => {
+    const formData = new FormData();
+    formData.append('formFile', file[0]);
+    const {data} = await axiosClient.post('/users/upload-avatar', formData);
+    return data;
+};

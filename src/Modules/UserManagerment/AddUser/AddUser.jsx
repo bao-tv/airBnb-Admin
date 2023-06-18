@@ -46,7 +46,7 @@ function AddUser() {
         try {
             const data = await apiSignUp(value);
             if (data?.statusCode === 200) {
-                    const url = searchParams.get("redireactUrl") || "/admin/list-user";
+                    const url = searchParams.get("redireactUrl") || "/list-user";
                     Swal.fire({
                       title: `Bạn đã tạo thành công tài khoản: ${data?.content.email}`,
                       text: "Nhấn Ok để tiếp tục!",
@@ -61,7 +61,7 @@ function AddUser() {
          } catch (error) {
             console.log(error);
             if (user?.user.role === "ADMIN") {
-                const url = searchParams.get("redireactUrl") || "/admin/list-user";
+                const url = searchParams.get("redireactUrl") || "/list-user";
                 Swal.fire({
                     title: error.message,
                     text: "Nhấn Ok để tiếp tục!",
