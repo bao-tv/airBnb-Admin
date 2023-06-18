@@ -20,8 +20,8 @@ export const signin = createAsyncThunk(
 // reducer
 const initialState = {
     user: JSON.parse(localStorage.getItem('user')) || null,
-    isLoading: false,
-    error: null
+    isLoadingUser: false,
+    errorUser: null
 }
 
 const userSlice = createSlice ({
@@ -34,13 +34,13 @@ const userSlice = createSlice ({
     },
     extraReducers: (builder) => {
         builder.addCase(signin.pending, (state) => {
-            return {...state, isLoading: true, error: null}
+            return {...state, isLoadingUser: true, errorUser: null}
         });
         builder.addCase(signin.fulfilled, (state, action) => {
-            return {...state, isLoading: false, user: action.payload, error: null}
+            return {...state, isLoadingUser: false, user: action.payload, errorUser: null}
         });
         builder.addCase(signin.rejected, (state, action) => {
-            return {...state, isLoading: false, error: action.error.message}
+            return {...state, isLoadingUser: false, errorUser: action.error.message}
         });
     }
 })

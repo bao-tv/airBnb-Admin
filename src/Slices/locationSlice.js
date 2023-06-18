@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {apiLocation} from '../Apis/roomAPI';
 
 export const locations = createAsyncThunk(
-    'location/get-all',
+    'location',
     async () => {
         try {
             const data = await apiLocation();

@@ -13,12 +13,17 @@ function AdminSidebar() {
 
   const handleThongTin = () => {
     handleFooterItem(1);
-    navigate("/admin");
+    navigate("/");
   };
 
   const handleListBook = () => {
     handleFooterItem(2);
     navigate("booking");
+  };
+
+  const handleCommentBook = () => {
+    handleFooterItem(3);
+    navigate("comment");
   };
   return (
     <div className={style.adminSidebar}>
@@ -41,13 +46,19 @@ function AdminSidebar() {
         </div>
         <div>
           <li className={`${style.footerItem} ${ activeFooterItem === 3 ? style.action : "" }`}
-            onClick={() => handleFooterItem(3)}>
+            onClick={handleCommentBook} >
+            Danh sách bình luận
+          </li>
+        </div>
+        <div>
+          <li className={`${style.footerItem} ${ activeFooterItem === 4 ? style.action : "" }`}
+            onClick={() => handleFooterItem(4)}>
             Quản lý phòng
-            <span className={activeFooterItem === 3 ? style.icon : ""}>
+            <span className={activeFooterItem === 4 ? style.icon : ""}>
               <i className="bi bi-chevron-right"></i>
             </span>
           </li>
-          <Collapse in={activeFooterItem === 3}>
+          <Collapse in={activeFooterItem === 4}>
             <ul className={style.listItem}>
               <li onClick={() => {navigate("list-room")}} className={style.listItemDetail} >
                 Danh sách Phòng
@@ -59,14 +70,14 @@ function AdminSidebar() {
           </Collapse>
         </div>
         <div>
-          <li className={`${style.footerItem} ${ activeFooterItem === 4 ? style.action : ""}`}
-            onClick={() => handleFooterItem(4)} >
+          <li className={`${style.footerItem} ${ activeFooterItem === 5 ? style.action : ""}`}
+            onClick={() => handleFooterItem(5)} >
             Quản lý User
-            <span className={activeFooterItem === 4 ? style.icon : ""}>
+            <span className={activeFooterItem === 5 ? style.icon : ""}>
               <i className="bi bi-chevron-right"></i>
             </span>
           </li>
-          <Collapse in={activeFooterItem === 4}>
+          <Collapse in={activeFooterItem === 5}>
             <ul className={style.listItem}>
               <li className={style.listItemDetail} onClick={() => navigate("list-user")}>Danh sách User</li>
               <li className={style.listItemDetail} onClick={() => navigate("add-user")}>Thêm User</li>

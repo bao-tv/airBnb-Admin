@@ -12,7 +12,7 @@ function AdminRouter({children}) {
     // nếu chưa có đăng nhập và mã loại người dùng ko phải là quản trị, điều hướng về trang Home
     if(!user || user.user.role !== "ADMIN") {
         Swal.fire({
-            title: "Bạn phải đăng nhập để tiếp tục",
+            title: "Bạn phải đăng nhập tài khoản Admin để tiếp tục",
             text: "Nhấn Ok để đến trang đăng nhập!",
             icon: "success",
             confirmButtonColor:'#ff395c',

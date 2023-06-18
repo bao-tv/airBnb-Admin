@@ -1,0 +1,29 @@
+@import "../../../index.scss";
+
+.modal-content{
+    .title{
+        @extend .title;
+        padding: 1rem;      
+    }
+    .input {
+        margin-bottom: 0.5rem;
+    }
+    span{
+        width: 9rem;
+    }
+    .react-datepicker-wrapper{
+        width: auto !important;
+        input{
+            border: 1px solid #ced3da;
+            padding: 6px 10px 6px 14px;
+            border-top-right-radius: 3px;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+        }
+    }
+    .input_Des{
+        height: 100%;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+}

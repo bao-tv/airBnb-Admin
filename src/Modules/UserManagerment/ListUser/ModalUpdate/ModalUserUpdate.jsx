@@ -1,13 +1,8 @@
 import React, {useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {useForm} from 'react-hook-form';
-import { useDispatch } from "react-redux";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import Swal from 'sweetalert2';
-import {apiUpdateInfoUser} from '../../Apis/userAPI';
-import { signin } from '../../Slices/userSlice';
-import {useNavigate, useLocation} from 'react-router-dom'
 import style from './ModalUpdate.module.scss';
 
 // định nghĩa các xác thực input
@@ -22,14 +17,8 @@ const schema = yup.object({
         .required('Loại người dùng không được để trống'),
     // gender: yup
 });
-function ModalUpdate({onShow, handleShow, dataUser}) {
-    const values = dataUser;
-    const navigate = useNavigate();
-    const location = useLocation();
-    // console.log(location);
-    // debugger;
-    const dispatch = useDispatch();
-    const [errAPI, setErrAPI] = useState(null);
+function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
+    // const values = onShow?.value;
     const {register, handleSubmit,formState: {errors}} = useForm({
         defaultValues: {
             id: '',
@@ -42,38 +31,14 @@ function ModalUpdate({onShow, handleShow, dataUser}) {
         },
         mode: "onTouched",
         resolver: yupResolver(schema),
-        values
+        values: onShow?.value,
     });
 
     // gọi api trả về, ko lưu redux vì chỉ sài 1 lần sau đó put update thông tin
-    const onSubmit = async (value) => {
-        try {
-            const data = await apiUpdateInfoUser(value);
-            // console.log(data);
-            // vì trang infoUser lấy thông tin từ redux nên phải reload từ redux
-            if(location?.pathname === '/admin') dispatch(signin(data?.data.content));
-            Swal.fire({
-                title: `Bạn đã update thành công ID: ${data?.data.content.id}`,
-                text: "Nhấn Ok để tiếp tục!",
-                icon: "success",
-                confirmButtonColor:'#ff395c',
-            }).then((willSuccess) => {
-                if (willSuccess) {
-                    handleShow(false);
-                    // trang danh sách user chỉ cần call api lại thôi
-                    navigate(0);
-                }
-              })
-        } catch (error) {
-            setErrAPI(error);
-        }
-    };
-    const onErrer = (err) => {
-        console.log(err);
-    }
+
     return (
     <Modal
-        show={onShow}
+        show={onShow?.key === 'update'}
         onHide={()=>handleShow(false)}
         backdrop="static"
         keyboard={false}
@@ -170,7 +135,6 @@ function ModalUpdate({onShow, handleShow, dataUser}) {
         <Modal.Footer>
             <button type='submit' className={style.btnPrimary}>Cập nhật</button>
         </Modal.Footer>
-            {errAPI && <div className='fs-7 text-danger fst-italic text-center mb-3'>{errAPI}</div>}
         </form>
         </Modal>
   )

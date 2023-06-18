@@ -14,6 +14,7 @@ import AddUser from "./Modules/UserManagerment/AddUser/AddUser";
 
 import RoomList from "./Modules/RoomManagement/RoomList/RoomList";
 import Location from "./Modules/RoomManagement/Location/Location";
+import Comment from "./Modules/Comment/Comment";
 
 import BookingRoom from "./Modules/BookingRoom/BookingRoom";
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="list-room" element={<RoomList/>} />
           <Route path="location" element={<Location/>} />
           <Route path="booking" element={<BookingRoom/>} />
+          <Route path="comment" element={<Comment/>} />
           
         </Route>
         <Route path="/"  element={<AuthLayout/>}>
