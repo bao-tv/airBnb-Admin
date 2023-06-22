@@ -11,14 +11,29 @@ import ModalImg from './ModalImg/ModalImg';
 function Location() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [errorAPI, setErrorAPI] = useState([]);
+    const [errorAPI, setErrorAPI] = useState(null);
+    console.log("errorAPI: ",errorAPI);
+    useEffect(() => {
+        if(errorAPI) Swal.fire({
+            title: "Không tìm thấy mã phòng",
+            text: `${error?.message} !!`,
+            icon: "error",
+            confirmButtonColor:'#ff395c',
+        })
+    }, [errorAPI])
     const [current,setCurrent] = useState(1);
     const [show, setShow] = useState(false);
+    const [inputValue, setInputValue] = useState(null);
+    // console.log(inputValue);
     const [location, setLocation] = useState(null);
 
     // lấy ds list vị trí từ redux
     const {locationList, error} = useSelector((state) => state.locationList);
+    // console.log("locationList: ",locationList);
+    let locationResult = locationList;
+    if(inputValue) locationResult = locationList?.filter((location) => location.id == inputValue);
     if(error) setErrorAPI(error);
+    // debugger;
     useEffect(() => {
         dispatch(locations());
       }, []);
@@ -62,6 +77,13 @@ function Location() {
         setErrorAPI(e);
     }
 
+    const handleInput = evt => {
+        // console.log(evt.target);
+        if (evt?.key === 'Enter' || evt?.key === 'Tab') {
+          setInputValue(evt?.target?.value);
+        }
+      }
+
     const handleDelete = async (id) => {
         try {
             const data = await apiDeleteLocation(id);
@@ -100,16 +122,17 @@ function Location() {
         setLocation(null);
         setShow({'name' : 'img', id: id});
     }
-    
     return (
     <div className='location w-100'>
-        <div className="d-flex justify-content-around">
+        <h2 className='title'>Quản lý vị trí</h2>
+        <div className="d-flex justify-content-around mb-2">
             <div className="input-group w-50">
             <input 
                 type="text" 
                 className="form-control" 
-                placeholder="Nhập email và nhấn Enter..." 
+                placeholder="Nhập mã vị trí và nhấn Enter..." 
                 name="inputValue"
+                onKeyDown={handleInput}
             />
             </div>
             <button className='btnPrimary' onClick={handleAddVitri}>Thêm Vị trí</button>
@@ -117,43 +140,49 @@ function Location() {
         <div className="body">
             <div className="container-fluid">
                 <div className="row">
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>ID</th>
-                                <th scope='col'>Vị trí</th>
-                                <th scope='col'>Tỉnh</th>
-                                <th scope='col'>Quốc gia</th>
-                                <th scope='col'>Hình ảnh</th>
-                                <th scope='col'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {locationList?.map((loaction, index) => {
-                                return(
-                                    <tr key={index}>
-                                        <td>{loaction.id}</td>
-                                        <td>{loaction.tenViTri}</td>
-                                        <td>{loaction.tinhThanh}</td>
-                                        <td>{loaction.quocGia}</td>
-                                        <td><img src={loaction.hinhAnh} alt="" style={{width: '200px'}}/></td>
-                                        <td>
-                                            <button onClick={() => handleUpdate(loaction)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
-                                            <button onClick={() => handleIMG(loaction.id)} className='btn text-secondary'><i className="bi bi-image"></i></button>
-                                            <button onClick={()=>handleDelete(loaction.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                    <Pagination
-                            className="pagination"
-                            onChange={PaginationChange}
-                            total={Math.ceil(locationList?.length / 10)}
-                            // ko thể thiếu current
-                            current={current}
-                            pageSize={1}/>
+                    <div className="col">
+                        <table className='table table-bordered'>
+                            <thead>
+                                <tr>
+                                    <th scope='col'>ID</th>
+                                    <th scope='col'>Vị trí</th>
+                                    <th scope='col'>Tỉnh</th>
+                                    <th scope='col'>Quốc gia</th>
+                                    <th scope='col'>Hình ảnh</th>
+                                    <th scope='col'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {locationResult?.map((location, index)  => {
+                                    return(
+                                        <tr key={index}>
+                                            <td>{location.id}</td>
+                                            <td>{location.tenViTri}</td>
+                                            <td>{location.tinhThanh}</td>
+                                            <td>{location.quocGia}</td>
+                                            <td><img src={location.hinhAnh} alt="" style={{width: '200px'}}/></td>
+                                            <td>
+                                                <button onClick={() => handleUpdate(location)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
+                                                <button onClick={() => handleIMG(location.id)} className='btn text-secondary'><i className="bi bi-image"></i></button>
+                                                <button onClick={()=>handleDelete(location.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                        {!locationResult.length && <p className='text-center text-danger'>Không tìm thấy vị trí</p>}
+                        {!inputValue && 
+                            <Pagination
+                                className="pagination"
+                                onChange={PaginationChange}
+                                total={Math.ceil(locationList?.length / 10)}
+                                // ko thể thiếu current
+                                current={current}
+                                pageSize={1}/>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

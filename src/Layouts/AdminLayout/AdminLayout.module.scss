@@ -1,0 +1,33 @@
+// .adminLayout{
+// }
+.adminShow{
+    display: flex;
+}
+.adminInfo{
+    display: none;
+}
+
+@media only screen and (max-width: 760px){
+    // .adminLayout{
+    // }
+    .adminShow{
+        display: none;
+    }
+    .adminInfo{
+        display: flex;
+        height: calc(100vh - 80px);
+        .detail{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            img{
+                width: 10rem !important;
+                height: auto;
+            }
+            p{
+                color: red;
+            }
+        }
+    }
+}

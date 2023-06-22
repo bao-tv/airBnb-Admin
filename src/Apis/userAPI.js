@@ -28,8 +28,10 @@ export const apiRemoveUser = async (id) => {
 }
 
 export const apiUpdateImgUser = async (file) => {
+    console.log(file?.hinhAnh[0]);
     const formData = new FormData();
-    formData.append('formFile', file[0]);
+    formData?.append('formFile', file?.hinhAnh[0]);
+    console.log(formData);
     const {data} = await axiosClient.post('/users/upload-avatar', formData);
     return data;
 };

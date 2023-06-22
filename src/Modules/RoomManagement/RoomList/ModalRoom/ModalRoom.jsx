@@ -74,8 +74,8 @@ function ModalRoom({show, setShow, onError, onSubmit, locationList}) {
         onHide={() => setShow(false)}
         backdrop="static"
         keyboard={false}>
-        <Modal.Header closeButton>
-            <Modal.Title className='text-bg-light-color'>
+        <Modal.Header closeButton className='title'>
+            <Modal.Title >
                 {show.key === 'update' && 'Cập nhật thông tin'}
                 {show.key === 'add' && 'Tạo mới thông tin'}
             </Modal.Title>

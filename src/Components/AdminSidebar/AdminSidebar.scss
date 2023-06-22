@@ -1,9 +1,22 @@
 @import '../../index.scss';
 
+.btnSlidebar{
+    button{
+        // margin: 0.5rem 0.5rem 0 0.5rem;
+        // border: 1px solid $boder-color;
+        border-radius: 0.5rem;
+        border: none;
+        color: $text-color;
+        i{
+            font-size: 2rem;
+        }
+    }
+}
+
 .adminSidebar{
     height: calc(100vh - 80px);
-    border-right: 1px solid $boder-color;
-    width: 25rem;
+    // border-right: 1px solid $boder-color;
+    // width: 25rem;
     position: sticky;
     left: 0;
     top: 80px;
@@ -40,6 +53,10 @@
         list-style: none;
         padding-left: 0rem;
         color: $text-color;
+        font-size: 1.25rem;
+        // @media only screen and (max-width: 1200px) {
+        //     font-size: 1.5rem;
+        // }
         .footerItem{
             
             padding: 10px;
@@ -71,3 +88,18 @@
         }
     }
 }
+
+@media screen and (max-width: 1200px) {
+    .offcanvas.offcanvas-start{
+        width: 300px !important;
+    }
+    // .btnSlidebar{
+    //     button{
+    //         i{
+    //             font-size: 1rem;
+    //         }
+    //     }
+    // }
+}
+
+

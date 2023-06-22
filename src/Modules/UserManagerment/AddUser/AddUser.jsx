@@ -6,6 +6,9 @@ import {apiSignUp} from '../../../Apis/userAPI';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Swal from 'sweetalert2';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from "../../../config/localeConfig";
 import './AddUser.scss';
 
 // định nghĩa các xác thực input
@@ -25,7 +28,8 @@ function AddUser() {
     const [passShow, setPassShow] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const {register, handleSubmit,formState: {errors}} = useForm({
+    const [birthday, setBirthday] = useState('');
+    const {register, handleSubmit, setValue,formState: {errors}} = useForm({
         defaultValues: {
             id: 0,
             name: '',
@@ -159,15 +163,19 @@ function AddUser() {
                 )}
 
                 <div className="input-group mb-3">
-                    <div className="form-floating">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Ngày sinh"
-                        {...register("birthday")}
-                    />
-                    <label htmlFor="floatingPassword">Ngày sinh</label>
-                    </div>
+                    <span className="input-group-text text-text-color">Ngày sinh</span>
+                    <span className=''>
+                        <DatePicker
+                            showIcon
+                            selected={birthday}
+                            onChange={(date) => {
+                                setBirthday(date);
+                                // set lại định dạng ISO 8601 format để gửi về sever
+                                setValue("birthday", dayjs(date).format('DD-MM-YYYY'));
+                            }}
+                            className='datePicker'
+                            dateFormat="dd/MM/yyyy"/>
+                    </span>
                 </div>
                 {errors.birthday && (
                     <p className="ms-3 mb-3 fs-7 text-danger fst-italic">

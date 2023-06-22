@@ -3,3 +3,16 @@
 .btnPrimary {
     @extend .btnPrimary;
 }
+
+.datePicker{
+    border: 1px solid $boder-color;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.react-datepicker__view-calendar-icon input {
+    padding: 6px 10px 6px 25px;
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+    width: 100%;
+}

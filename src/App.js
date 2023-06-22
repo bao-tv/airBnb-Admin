@@ -18,6 +18,8 @@ import Comment from "./Modules/Comment/Comment";
 
 import BookingRoom from "./Modules/BookingRoom/BookingRoom";
 
+import Error from "./Components/Error/Error";
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +39,8 @@ function App() {
           <Route path="location" element={<Location/>} />
           <Route path="booking" element={<BookingRoom/>} />
           <Route path="comment" element={<Comment/>} />
+          <Route path="error" element={<Error/>} />
+
           
         </Route>
         <Route path="/"  element={<AuthLayout/>}>

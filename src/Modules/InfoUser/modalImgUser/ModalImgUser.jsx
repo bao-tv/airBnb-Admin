@@ -35,20 +35,24 @@ function ModalImg({onShow, handleShow, onError, onSubmit}) {
         onHide={()=>handleShow(false)}
         backdrop="static"
         keyboard={false}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='title'>
             <Modal.Title className='text-bg-light-color'>Cập nhật hình ảnh</Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Modal.Body>
-        <div className="row mb-1 align-items-center">
-            <div className="col-2 text-end">Hình ảnh</div>
-            <div className="col-10">
+        <div className="row mb-1 align-items-center justify-content-center">
+            {/* <div className="col-4">Hình ảnh</div>
+            <div className="col-8">
                 <input
                     type="file" 
                     placeholder='hinhAnh ...' 
                     {...register('hinhAnh')}/>
                 <img className="imgPreview" alt="" />
-            </div>
+            </div> */}
+
+            <label htmlFor="formFile" className="form-label text-text-color">Chọn hình ảnh đại diện</label>
+            <input className="form-control text-text-color" type="file" id="formFile"{...register('hinhAnh')}/>
+
         </div>
             {errors?.hinhAnh && <p className='ms-3 fs-7 text-danger fst-italic'>{errors?.hinhAnh.message}</p>}
         </Modal.Body>

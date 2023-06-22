@@ -26,13 +26,19 @@ function Comment() {
                 result = content.filter((cmt) => cmt.maPhong == inputValue);
               }
             setCommentRoom(result);
+            if(!result.length) Swal.fire({
+              title: "Không tìm thấy bình luận",
+              // text: `${error?.message} !!`,
+              icon: "error",
+              confirmButtonColor:'#ff395c',
+          })
         } else {
         setCommentRoom(content);
         }
       } catch (error) {
         // console.log(error);
         Swal.fire({
-          title: "Không tìm thấy user",
+          title: "Không tìm thấy bình luận",
           text: `${error?.message} !!`,
           icon: "error",
           confirmButtonColor:'#ff395c',
@@ -45,7 +51,6 @@ function Comment() {
     }, [inputValue, roomID, commentID]);
   
     const onSubmit = async (value) => {
-      console.log(value);
       try {
         let data = null;
         if(show.key === 'update') {data = await apiUpdateComment(value)};
@@ -122,65 +127,66 @@ function Comment() {
     return (
       <div className='comment w-100'>
         <h2 className='title'>Quản lý bình luận</h2>
-        <div className="d-flex justify-content-around mb-2">
-            <div className="input-group w-50">
-            <input 
-                type="text" 
-                className="form-control" 
-                placeholder="nhập mã phòng và nhấn Enter" 
-                name="inputValue"
-                onKeyDown={handleInput}
-            />
-            </div>
-            {/* <button className='btnPrimary'>Tìm phòng đã đặt</button> */}
-        </div>
-        <div className="body">
-              <div className="container">
-                  <div className="row">
-                      <table className='table table-hover table-bordered w-100'>
-                          <thead>
-                              <tr>
-                                  <th scope='col'>#</th>
-                                  <th scope='col'>ID</th>
-                                  <th scope='col'>Mã phòng</th>
-                                  <th scope='col'>Mã người bình luận</th>
-                                  <th scope='col'>Nội dung</th>
-                                  <th scope='col'>Số sao</th>
-                                  <th scope='col'>Ngày bình luận</th>
-                                  <th scope='col'>Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {commentRoom?.map((comment, index) => {
-                                  return(
-                                      <tr key={index}>
-                                          <th scope="row">{index+1}</th>
-                                          <td>{comment.id}</td>
-                                          <td>{comment.maPhong}</td>
-                                          <td>{comment.maNguoiBinhLuan}</td>
-                                          <td>{comment.noiDung}</td>
-                                          <td>{comment.saoBinhLuan}</td>
-                                          <td>{dayjs(comment.ngayBinhLuan).$d != 'Invalid Date' ? dayjs(comment.ngayBinhLuan).format('DD/MM/YYYY') : ''}</td>
-                                          {/* <td>{dayjs(comment.ngayBinhLuan).format('DD/MM/YYYY')}</td> */}
-  
-                                          <td>
-                                              <button onClick={() => handleUpdateComment(comment)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
-                                              {/* <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button> */}
-                                              <button onClick={() => handleDeleteComment(comment.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
-                                          </td>
-                                      </tr>
-                                  )
-                              })}
-                          </tbody>
-                      </table>
-                    {!(commentRoom?.length) && 
-                    <div className='text-center text-danger'>
-                        <h3>Không tìm thấy bình luận với phòng này</h3>
-                    </div>
-                    }
+        <div className='container-fluid'>
+          <div className="row">
+            <div className="col">
+              <div className="d-flex justify-content-around mb-2">
+                  <div className="input-group w-50">
+                  <input 
+                      type="text" 
+                      className="form-control" 
+                      placeholder="nhập mã phòng và nhấn Enter" 
+                      name="inputValue"
+                      onKeyDown={handleInput}
+                  />
                   </div>
               </div>
+              <div className="body">
+                  <table className='table table-hover table-bordered w-100'>
+                      <thead>
+                          <tr>
+                              <th scope='col'>#</th>
+                              <th scope='col'>ID</th>
+                              <th scope='col'>Mã phòng</th>
+                              <th scope='col'>Mã người bình luận</th>
+                              <th scope='col'>Nội dung</th>
+                              <th scope='col'>Số sao</th>
+                              <th scope='col'>Ngày bình luận</th>
+                              <th scope='col'>Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {commentRoom?.map((comment, index) => {
+                              return(
+                                  <tr key={index}>
+                                      <th scope="row">{index+1}</th>
+                                      <td>{comment.id}</td>
+                                      <td>{comment.maPhong}</td>
+                                      <td>{comment.maNguoiBinhLuan}</td>
+                                      <td>{comment.noiDung}</td>
+                                      <td>{comment.saoBinhLuan}</td>
+                                      <td>{dayjs(comment.ngayBinhLuan).$d != 'Invalid Date' ? dayjs(comment.ngayBinhLuan).format('DD/MM/YYYY') : ''}</td>
+                                      {/* <td>{dayjs(comment.ngayBinhLuan).format('DD/MM/YYYY')}</td> */}
+
+                                      <td>
+                                          <button onClick={() => handleUpdateComment(comment)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
+                                          {/* <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button> */}
+                                          <button onClick={() => handleDeleteComment(comment.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
+                                      </td>
+                                  </tr>
+                              )
+                          })}
+                      </tbody>
+                  </table>
+                  {!(commentRoom?.length) && 
+                  <div className='text-center text-danger'>
+                      <h3>Không tìm thấy bình luận với phòng này</h3>
+                  </div>
+                  }
+                </div>
+              </div>
           </div>
+        </div>
         <ModalComment 
           show = {show}
           setShow = {setShow}
