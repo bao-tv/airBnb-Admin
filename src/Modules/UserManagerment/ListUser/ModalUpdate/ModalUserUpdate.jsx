@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,8 +18,10 @@ const schema = yup.object({
     // gender: yup
 });
 function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
-    // const values = onShow?.value;
-    const {register, handleSubmit,formState: {errors}} = useForm({
+    
+    // const values = onShow?.value.birthday;
+    // console.log(values);
+    const {register, handleSubmit, setValue,formState: {errors}} = useForm({
         defaultValues: {
             id: '',
             name: '',
@@ -33,7 +35,6 @@ function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
         resolver: yupResolver(schema),
         values: onShow?.value,
     });
-
     // gọi api trả về, ko lưu redux vì chỉ sài 1 lần sau đó put update thông tin
 
     return (
@@ -43,7 +44,7 @@ function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
         backdrop="static"
         keyboard={false}
         >
-        <Modal.Header className='bg-primary-color' closeButton>
+        <Modal.Header className='title' closeButton>
             <Modal.Title className='text-bg-light-color'>Cập nhật thông tin</Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit(onSubmit, onErrer)}>
@@ -95,13 +96,13 @@ function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
                 {errors.phone && <p className='ms-3 fs-7 text-danger fst-italic'>{errors.phone.message}</p>}
             
             <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Ngày sinh :</span>
-            <input 
-                type="text"
-                className="form-control" 
-                placeholder='Ngày sinh'
-                {...register('birthday')}
-                />
+                <span className="input-group-text">Ngày sinh :</span>
+                <input 
+                    type="text"
+                    className="form-control" 
+                    placeholder='Ngày sinh'
+                    {...register('birthday')}
+                    />
             </div>
                 {errors.birthday && <p className='ms-3 fs-7 text-danger fst-italic'>{errors.birthday.message}</p>}
             

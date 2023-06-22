@@ -16,11 +16,16 @@
 }
 
 .infoUser{
-    width: 100%;
     .right{
+        border: 1px solid $boder-color;
+        border-radius: 1rem;
         width: 100%;
+        margin-top: 1rem;
+        overflow: hidden;
+        margin-bottom: 2rem;
         .table {
             @extend .table;
+            margin-bottom: 0;
             td{
                 padding: 0.5rem 0.5rem;
                 font-size: 16px !important;

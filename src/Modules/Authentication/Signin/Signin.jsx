@@ -22,7 +22,8 @@ function Signin() {
     },
   });
 
-  const { user, error } = useSelector((state) => state.user);
+  const { user, errorUser } = useSelector((state) => state.user);
+  console.log(errorUser);
 
   const onSubmit = (data) => {
     dispatch(signin(data));
@@ -122,8 +123,8 @@ function Signin() {
           <button type="submit" className={style.btnPrimary}>
             Đăng nhập
           </button>
-          {error && (
-            <p className="text-center fs-7 text-danger fst-italic">{error}</p>
+          {errorUser && (
+            <p className="text-center fs-7 text-danger fst-italic">{errorUser}</p>
           )}
         </form>
       </div>

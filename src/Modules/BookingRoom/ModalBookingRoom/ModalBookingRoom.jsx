@@ -3,9 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {useForm} from 'react-hook-form';
-import DatePicker, {registerLocale} from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import dayjs from "../../../config/localeConfig"
+import dayjs from "../../../config/localeConfig";
 import "./ModalBookingRoom.scss";
 
 // định nghĩa các xác thực input

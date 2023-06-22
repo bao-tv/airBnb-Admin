@@ -42,7 +42,7 @@ function ModalLocation({location, show, setShow, onErrer, onSubmit}) {
         onHide={() => setShow(false)}
         backdrop="static"
         keyboard={false}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='title'>
             <Modal.Title className='text-bg-light-color'>
                 {show === 'update' && 'Cập nhật thông tin'}
                 {show === 'add' && 'Tạo mới thông tin'}

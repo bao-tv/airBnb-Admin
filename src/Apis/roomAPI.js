@@ -10,6 +10,11 @@ export const apiRoomList = async (value) => {
     return data;
 };
 
+export const apiRoomId = async (id) => {
+    const {data} = await axiosClient.get(`/phong-thue/${id}`);
+    return data;
+};
+
 // ============== Room add, update, delete, upload img================
 export const apiDeleteRoom = async (id) => {
     const {data} = await axiosClient.delete(`/phong-thue/${id}`);
@@ -36,8 +41,9 @@ export const apiUpdateImgRoom = async (file, id) => {
 };
 
 // =========== Location add, update, delete, upload img ========
-export const apiLocation = async () => {
-    const {data} = await axiosClient.get('/vi-tri');
+export const apiLocation = async (id) => {
+    // console.log(id);
+    const {data} = await axiosClient.get(`/vi-tri/${id ? id : ""}`);
     return data;
 };
 

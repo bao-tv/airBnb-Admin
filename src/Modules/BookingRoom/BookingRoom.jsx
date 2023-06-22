@@ -43,10 +43,10 @@ function BookingRoom() {
   }, [inputValue ]);
 
   // lưu redux all booking
-  const {bookingList, error, isLoading} = useSelector((state) => state.bookingList)
-  useEffect(() => {
-    dispatch(bookings());
-  }, []);
+  // const {bookingList, error, isLoading} = useSelector((state) => state.bookingList)
+  // useEffect(() => {
+  //   dispatch(bookings());
+  // }, []);
 
   const onSubmit = async (value) => {
     // console.log("value submit: ",value);
@@ -127,7 +127,7 @@ function BookingRoom() {
   return (
     <div className='booking w-100'>
       <h2 className='title'>Quản lý đặt phòng</h2>
-      <div className="d-flex justify-content-around mb-2">
+      <div className="d-flex justify-content-around mb-2 container-fluid">
           <div className="input-group w-50">
           <input 
               type="text" 
@@ -139,54 +139,55 @@ function BookingRoom() {
           </div>
           {/* <button className='btnPrimary'>Tìm phòng đã đặt</button> */}
       </div>
-      <div className="body">
-            <div className="container-fluid">
-                <div className="row">
-                    <table className='table table-hover table-bordered w-100'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>#</th>
-                                <th scope='col'>ID</th>
-                                <th scope='col'>Mã phòng</th>
-                                <th scope='col'>Ngày đến</th>
-                                <th scope='col'>Ngày đi</th>
-                                <th scope='col'>Số lượng khách</th>
-                                <th scope='col'>Mã người dùng</th>
-                                <th scope='col'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userBooking?.map((booking, index) => {
-                                return(
-                                    <tr key={index}>
-                                        <th scope="row">{index+1}</th>
-                                        <td>{booking.id}</td>
-                                        <td>{booking.maPhong}</td>
-                                        <td>{dayjs(booking.ngayDen).format('DD/MM/YYYY')}</td>
-                                        <td>{dayjs(booking.ngayDi).format('DD/MM/YYYY')}</td>
-                                        <td>{booking.soLuongKhach}</td>
-                                        <td>{booking.maNguoiDung}</td>
-                                        <td>
-                                            <button onClick={() => handleUpdateBooking(booking)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
-                                            {/* <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button> */}
-                                            <button onClick={() => handleDeleteBooking(booking.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                            {!(userBooking?.length) && inputValue &&
-                            <div className='text-center text-danger'>
-                              <h3>User không có lịch sử đặt phòng đặt phòng</h3>
-                            </div>
-                            }
-                            {!(inputValue) &&
-                            <div className='text-center text-danger'>
-                              <h3>Bạn chưa nhập user</h3>
-                            </div>
-                            }
-                </div>
+      <div className="body container-fluid">
+            <div className="row">
+              <div className="col">
+                <table className='table table-hover table-bordered w-100'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>#</th>
+                            <th scope='col'>ID</th>
+                            <th scope='col'>Mã phòng</th>
+                            <th scope='col'>Ngày đến</th>
+                            <th scope='col'>Ngày đi</th>
+                            <th scope='col'>Số lượng khách</th>
+                            <th scope='col'>Mã người dùng</th>
+                            <th scope='col'>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userBooking?.map((booking, index) => {
+                            return(
+                                <tr key={index}>
+                                    <th scope="row">{index+1}</th>
+                                    <td>{booking.id}</td>
+                                    <td>{booking.maPhong}</td>
+                                    <td>{dayjs(booking.ngayDen).format('DD/MM/YYYY')}</td>
+                                    <td>{dayjs(booking.ngayDi).format('DD/MM/YYYY')}</td>
+                                    <td>{booking.soLuongKhach}</td>
+                                    <td>{booking.maNguoiDung}</td>
+                                    <td>
+                                        <button onClick={() => handleUpdateBooking(booking)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
+                                        {/* <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button> */}
+                                        <button onClick={() => handleDeleteBooking(booking.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                  {!(userBooking?.length) && inputValue &&
+                  <div className='text-center text-danger'>
+                    <h3>User không có lịch sử đặt phòng đặt phòng</h3>
+                  </div>
+                  }
+                  {!(inputValue) &&
+                  <div className='text-center text-danger'>
+                    <h3>Bạn chưa nhập user</h3>
+                  </div>
+                  }
+
+              </div>
             </div>
         </div>
       <ModalBookingRoom 

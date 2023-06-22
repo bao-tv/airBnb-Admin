@@ -32,7 +32,7 @@ function ModalImg({show, setShow, onError, onSubmit}) {
         onHide={()=>setShow(false)}
         backdrop="static"
         keyboard={false}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='title'>
             <Modal.Title className='text-bg-light-color'> Cập nhật hình ảnh</Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit(onSubmit, onError)}>

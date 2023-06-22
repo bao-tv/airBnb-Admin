@@ -10,17 +10,19 @@
     top: 0;
     background-color: $white-color;
     z-index: 10;
-    // .dropdownMenu{
-    //     display: none;
-    // }
-    // .show{
-    //     overflow: hidden;
-    //     display: block !important;
-    // }
+    .logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $primary-color;
+        cursor: pointer;
+        font-size: 2rem;
+    }
     .btnInfo{
         padding: 5px 5px 5px 12px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border: 1px solid $boder-color;
         border-radius: 21px;
         background-color: inherit;
@@ -42,6 +44,16 @@
             display: flex;
             justify-content: center;
             font-size: 1.25rem;
+            overflow: hidden;
+        }
+        .imgAvatar{
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            // font-size: 1.25rem;
             overflow: hidden;
         }
     }

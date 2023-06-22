@@ -3,10 +3,10 @@ import {apiLocation} from '../Apis/roomAPI';
 
 export const locations = createAsyncThunk(
     'location',
-    async () => {
+    async (id) => {
         try {
-            const data = await apiLocation();
-            return data.content;
+            const data = await apiLocation(id);
+            if(id) return [data.content]; else return data.content;
         } catch (error) {
             throw error;
         }
@@ -31,7 +31,7 @@ const locationSlice = createSlice ({
             return {...state, isLoading:false, locationList: action.payload, error: null}
         });
         builder.addCase(locations.rejected, (state, action) => {
-            return {...state, isLoading: false, error: action.error}
+            return {...state, locationList: null, isLoading: false, error: action.error}
         });
     }
 })
