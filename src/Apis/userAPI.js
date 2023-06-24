@@ -17,8 +17,8 @@ export const apiUpdateInfoUser = async (value) => {
     return data;
 };
 
-export const apiListUser = async (value) => {
-    const data = await axiosClient.get(`/users/phan-trang-tim-kiem?pageIndex=${value}&pageSize=10`);
+export const apiListUser = async () => {
+    const data = await axiosClient.get("/users");
     return data;
 }
 

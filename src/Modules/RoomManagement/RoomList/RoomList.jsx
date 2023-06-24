@@ -16,7 +16,7 @@ function RoomList() {
     const [roomList, setRoomList] = useState([]);
     // console.log(roomList);
     const [errorAPI, setErrorAPI] = useState(null);
-    console.log(errorAPI);
+    // console.log(errorAPI);
     const [show, setShow] = useState([]);
     const [inputValue, setInputValue] = useState(null);
     // console.log(inputValue);
@@ -132,18 +132,6 @@ function RoomList() {
         }
     }
 
-    const handleUpdate = (room) => {
-        setShow({key: 'update', value: room});
-    }
-
-    const handleAddPhong = () => {
-        setShow({key: 'add', value: null});
-    }
-
-    const handleImg = (id) => {
-        setShow({key: 'img', value: id});
-    }
-
     return (
     <div className='roomList w-100'>
         <h2 className='title'>Quản lý danh sách Phòng</h2>
@@ -157,7 +145,7 @@ function RoomList() {
                 onKeyDown={handleInput}
             />
             </div>
-            <button className='btnPrimary' onClick={() => handleAddPhong()}>Thêm phòng</button>
+            <button className='btnPrimary' onClick={() => setShow({key: 'add', value: null})}>Thêm phòng</button>
         </div>
         <div className="body">
             <div className="container-fluid">
@@ -227,8 +215,8 @@ function RoomList() {
                                             </td>
                                             <td><img src={room.hinhAnh} alt="" srcset={room.hinhAnh} style={{width:'100%'}}/></td>
                                             <td>
-                                                <button onClick={() => handleUpdate(room)} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
-                                                <button onClick={() => handleImg(room.id)} className='btn text-secondary'><i className="bi bi-image"></i></button>
+                                                <button onClick={() => setShow({key: 'update', value: room})} className='btn text-secondary'><i className="bi bi-pencil-square"></i></button>
+                                                <button onClick={() => setShow({key: 'img', value: room.id})} className='btn text-secondary'><i className="bi bi-image"></i></button>
                                                 <button onClick={() => handleRemove(room.id)} className='btn text-danger'> <i className="bi bi-trash3"></i></button>
                                                 <button onClick={() => navigate(`/comment?roomID=${room.id}`)} className='btn text-danger'> <i className="bi bi-chat-dots"></i></button>
                                             </td>

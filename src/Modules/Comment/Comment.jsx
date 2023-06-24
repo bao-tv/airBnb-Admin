@@ -1,89 +1,103 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import Pagination from 'rc-pagination';
 import {apiAllCommentList , apiDeleteComment, apiUpdateComment} from "../../Apis/commentAPI";
 import {useNavigate, useLocation} from 'react-router-dom';
 import ModalComment from './ModalComment/ModalComment';
 
 function Comment() {
   const dayjs = require('dayjs');
-    const navigate = useNavigate();
-    // lấy từ url userID từ react router dom đã gửi tại mục quản lý user http://localhost:3000/list-user
-    const commentID = new URLSearchParams(useLocation().search).get('commentID');
-    const roomID = new URLSearchParams(useLocation().search).get('roomID');
-    const [inputValue, setInputValue] = useState(null);
-    const [commentRoom, setCommentRoom] = useState([]);
-    const [show, setShow] = useState([]);
-    const getCommentRoom = async () => {
-      try {
-        const {content} = await apiAllCommentList();
-        if (commentID || roomID || inputValue) {
-            let result = content;
-            if (commentID) {
-                result = content.filter((cmt) => cmt.id == commentID);
-              } else if (roomID) {
-                result = content.filter((cmt) => cmt.maPhong == roomID);
-              } else if (inputValue) {
-                result = content.filter((cmt) => cmt.maPhong == inputValue);
-              }
-            setCommentRoom(result);
-            if(!result.length) Swal.fire({
-              title: "Không tìm thấy bình luận",
-              // text: `${error?.message} !!`,
-              icon: "error",
-              confirmButtonColor:'#ff395c',
-          })
-        } else {
-        setCommentRoom(content);
-        }
-      } catch (error) {
-        // console.log(error);
-        Swal.fire({
-          title: "Không tìm thấy bình luận",
-          text: `${error?.message} !!`,
-          icon: "error",
-          confirmButtonColor:'#ff395c',
-      })
-        }
-    }
-    
-    useEffect(() => {
-        getCommentRoom();
-    }, [inputValue, roomID, commentID]);
-  
-    const onSubmit = async (value) => {
-      try {
-        let data = null;
-        if(show.key === 'update') {data = await apiUpdateComment(value)};
-        Swal.fire({
-          title: data?.message,
-          text: "Nhấn Ok để tiếp tục!",
-          icon: "success",
-          confirmButtonColor:'#ff395c',
-      }).then((willSuccess) => {
-          console.log(data);
-          if (willSuccess) {
-              setShow(false);
-              // reload page update lại thông tin trên table
-              // reload lại page nhưng vẫn giữ giá trị userID đang update
-              // input user đã bị mất nên phải lưu trên url và sử dụng useLocation để lưu
-              navigate(`/comment?commentID=${value.id}`);
-              window.location.reload();
-          }
+  const countPerPage = 10;
+  const [current,setCurrent] = useState(1);
+  const [collection, setCollection] = useState([]);
+  const navigate = useNavigate();
+  // lấy từ url userID từ react router dom đã gửi tại mục quản lý user http://localhost:3000/list-user
+  const commentID = new URLSearchParams(useLocation().search).get('commentID');
+  const roomID = new URLSearchParams(useLocation().search).get('roomID');
+  const [inputValue, setInputValue] = useState(null);
+  const [commentRoom, setCommentRoom] = useState([]);
+  const [show, setShow] = useState([]);
+  const getCommentRoom = async () => {
+    try {
+      const {content} = await apiAllCommentList();
+      if (commentID || roomID || inputValue) {
+          let result = content;
+          if (commentID) {
+              result = content.filter((cmt) => cmt.id == commentID);
+            } else if (roomID) {
+              result = content.filter((cmt) => cmt.maPhong == roomID);
+            } else if (inputValue) {
+              result = content.filter((cmt) => cmt.maPhong == inputValue);
+            }
+          setCommentRoom(result);
+          if(!result.length) Swal.fire({
+            title: "Không tìm thấy bình luận",
+            // text: `${error?.message} !!`,
+            icon: "error",
+            confirmButtonColor:'#ff395c',
         })
-      } catch (error) {
-        console.log('error: ',error);
-        Swal.fire({
-          title: error?.message,
-          text: `${error?.response?.data?.content} !!`,
-          icon: "error",
-          confirmButtonColor:'#ff395c',
-      })
+      } else {
+      setCommentRoom(content);
       }
-    }
+    } catch (error) {
+      // console.log(error);
+      Swal.fire({
+        title: "Không tìm thấy bình luận",
+        text: `${error?.message} !!`,
+        icon: "error",
+        confirmButtonColor:'#ff395c',
+    })
+      }
+  }
+  useEffect(() => {
+    setCollection(commentRoom.slice(0, countPerPage));
+}, [commentRoom]);
+// cài đặt Pagination
+const PaginationChange = (page) => {
+    setCurrent(page);
+    const to = countPerPage * page;
+    const from = to - countPerPage;
+    setCollection((commentRoom.slice(from, to)));
+}
+    
+  useEffect(() => {
+      getCommentRoom();
+  }, [inputValue, roomID, commentID]);
   
-    const onError = async (value) => {
-      // console.log(value);
-      console.log(value);
+  const onSubmit = async (value) => {
+    try {
+      let data = null;
+      if(show.key === 'update') {data = await apiUpdateComment(value)};
+      Swal.fire({
+        title: data?.message,
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "success",
+        confirmButtonColor:'#ff395c',
+    }).then((willSuccess) => {
+        console.log(data);
+        if (willSuccess) {
+            setShow(false);
+            // reload page update lại thông tin trên table
+            // reload lại page nhưng vẫn giữ giá trị userID đang update
+            // input user đã bị mất nên phải lưu trên url và sử dụng useLocation để lưu
+            navigate(`/comment?commentID=${value.id}`);
+            window.location.reload();
+        }
+      })
+    } catch (error) {
+      console.log('error: ',error);
+      Swal.fire({
+        title: error?.message,
+        text: `${error?.response?.data?.content} !!`,
+        icon: "error",
+        confirmButtonColor:'#ff395c',
+    })
+    }
+  }
+
+  const onError = async (value) => {
+    // console.log(value);
+    console.log(value);
   }
   
     // console.log(inputValue);
@@ -156,10 +170,10 @@ function Comment() {
                           </tr>
                       </thead>
                       <tbody>
-                          {commentRoom?.map((comment, index) => {
+                          {collection?.map((comment, index) => {
                               return(
                                   <tr key={index}>
-                                      <th scope="row">{index+1}</th>
+                                      <th scope="row">{(current - 1)*10 + index+1}</th>
                                       <td>{comment.id}</td>
                                       <td>{comment.maPhong}</td>
                                       <td>{comment.maNguoiBinhLuan}</td>
@@ -183,6 +197,14 @@ function Comment() {
                       <h3>Không tìm thấy bình luận với phòng này</h3>
                   </div>
                   }
+                  <Pagination
+                                className="pagination"
+                                onChange={PaginationChange}
+                                total = {commentRoom?.length}
+                                // ko thể thiếu current
+                                current={current}
+                                pageSize={countPerPage}
+                                />
                 </div>
               </div>
           </div>

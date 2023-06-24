@@ -37,7 +37,7 @@ function InfoUser() {
             let data = null;
             if(show.key === 'update') {data = await apiUpdateInfoUser(value)};
             if(show.key === 'img') {data = await apiUpdateImgUser(value)};
-            console.log('data: ',data);
+            // console.log('data: ',data);
             Swal.fire({
                 title: `Bạn đã update thành công`,
                 text: "Nhấn Ok để tiếp tục!",
@@ -50,9 +50,9 @@ function InfoUser() {
                     let value = null;
                     if(show.key === 'update') {value = {...user?.user, password: data?.data?.content?.password}};
                     if(show.key === 'img') {value = {...user?.user, password: data?.content?.password}};
-                    console.log('value login: ',value);
+                    // console.log('value login: ',value);
                     dispatch(signin(value));
-                    navigate(0);
+                    // navigate(0);
                 }
               })
         } catch (error) {
@@ -107,6 +107,12 @@ function InfoUser() {
     }
     return total;
     }, 0);
+
+    if(isLoadingUser || isLoadingRoom) return (
+        <div className="d-flex justify-content-center align-items-center w-100">
+            <img src="/formIloading.gif" alt="" style={{width: "5rem"}}/>
+        </div>
+    )
 
     return (
     <>
