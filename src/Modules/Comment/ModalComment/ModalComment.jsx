@@ -6,6 +6,7 @@ import {useForm} from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from '../../../config/localeConfig';
+import "./ModalComment.scss";
 
 // định nghĩa các xác thực input
 const schema = yup.object({
