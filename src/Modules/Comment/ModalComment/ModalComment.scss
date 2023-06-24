@@ -1,5 +1,7 @@
 @import "../../../index.scss";
 
+@import "../../../index.scss";
+
 .modal-content{
     .title{
         @extend .title;
@@ -9,7 +11,7 @@
         margin-bottom: 0.5rem;
     }
     span{
-        width: 9rem;
+        width: 11rem;
     }
     .react-datepicker-wrapper{
         width: auto !important;
