@@ -7,6 +7,7 @@ import {apiSignIn} from '../Apis/userAPI';
 export const signin = createAsyncThunk(
     'user/signin',
     async (value) => {
+        console.log("value sigin: ",value);
         try {
             const data = await apiSignIn(value);
             localStorage.setItem("user", JSON.stringify(data.content));

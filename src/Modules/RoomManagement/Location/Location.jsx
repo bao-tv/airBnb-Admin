@@ -11,8 +11,9 @@ import ModalImg from './ModalImg/ModalImg';
 function Location() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const countPerPage = 10;
     const [errorAPI, setErrorAPI] = useState(null);
-    console.log("errorAPI: ",errorAPI);
+    // console.log("errorAPI: ",errorAPI);
     useEffect(() => {
         if(errorAPI) Swal.fire({
             title: "Không tìm thấy mã phòng",
@@ -21,17 +22,23 @@ function Location() {
             confirmButtonColor:'#ff395c',
         })
     }, [errorAPI])
-    const [current,setCurrent] = useState(1);
     const [show, setShow] = useState(false);
     const [inputValue, setInputValue] = useState(null);
     // console.log(inputValue);
     const [location, setLocation] = useState(null);
-
+    const [current,setCurrent] = useState(1);
+    const [collection, setCollection] = useState([]);
+    // console.log("collection: ",collection);
+    
     // lấy ds list vị trí từ redux
     const {locationList, error} = useSelector((state) => state.locationList);
+    useEffect(() => {
+        setCollection(locationList.slice(0, countPerPage));
+        if(inputValue) setCollection(locationList?.filter((location) => location.id == inputValue));
+    }, [locationList, inputValue]);
     // console.log("locationList: ",locationList);
-    let locationResult = locationList;
-    if(inputValue) locationResult = locationList?.filter((location) => location.id == inputValue);
+    // let locationResult = locationList;
+    // if(inputValue) locationResult = locationList?.filter((location) => location.id == inputValue);
     if(error) setErrorAPI(error);
     // debugger;
     useEffect(() => {
@@ -40,6 +47,9 @@ function Location() {
 
     const PaginationChange = (page) => {
         setCurrent(page);
+        const to = countPerPage * page;
+        const from = to - countPerPage;
+        setCollection((locationList.slice(from, to)));
     };
 
     const onSubmit = async (value) => {
@@ -154,7 +164,7 @@ function Location() {
                             </thead>
                             <tbody>
                                 
-                                {locationResult?.map((location, index)  => {
+                                {collection?.map((location, index)  => {
                                     return(
                                         <tr key={index}>
                                             <td>{location.id}</td>
@@ -172,15 +182,15 @@ function Location() {
                                 })}
                             </tbody>
                         </table>
-                        {!locationResult.length && <p className='text-center text-danger'>Không tìm thấy vị trí</p>}
+                        {!collection.length && <p className='text-center text-danger'>Không tìm thấy vị trí</p>}
                         {!inputValue && 
                             <Pagination
                                 className="pagination"
                                 onChange={PaginationChange}
-                                total={Math.ceil(locationList?.length / 10)}
+                                total={locationList?.length}
                                 // ko thể thiếu current
                                 current={current}
-                                pageSize={1}/>
+                                pageSize={countPerPage}/>
                         }
                     </div>
                 </div>

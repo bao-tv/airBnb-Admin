@@ -21,7 +21,7 @@ function ModalUpdate({onShow, handleShow, onErrer, onSubmit}) {
     
     // const values = onShow?.value.birthday;
     // console.log(values);
-    const {register, handleSubmit, setValue,formState: {errors}} = useForm({
+    const {register, handleSubmit,formState: {errors}} = useForm({
         defaultValues: {
             id: '',
             name: '',

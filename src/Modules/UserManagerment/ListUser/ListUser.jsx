@@ -9,38 +9,50 @@ import ModalUserUpdate from './ModalUpdate/ModalUserUpdate';
 
 function ListUser() {
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const countPerPage = 10;
+    const [current,setCurrent] = useState(1);
     const [listUser, setListUser] = useState([]);
-    // console.log(listUser);
-    const [errorAPI, setErrorAPI] = useState([]);
-    // console.log('errorAPI :',errorAPI);
-
-    const [show, setShow] = useState(false);
-    const [current,setCurrent] = useState(1)
-    // cài đặt Pagination
-    const PaginationChange = (page) => {
-        setCurrent(page);
-    }
-
-    const getListUser = async (page) => {
+    const [collection, setCollection] = useState([]);
+    // console.log("collection: ",collection);
+    let userResult = listUser;
+    const [inputValue, setInputValue] = useState(null);
+    // xóa tài khoản
+    // console.log();
+    // console.log("userResult: ",userResult);
+    const getListUser = async () => {
         try {
-            const {data} = await apiListUser(page);
+            const {data} = await apiListUser();
             // console.log(data);
             setListUser(data?.content);
+            // console.log("inputValue: ",inputValue);
+            if(inputValue) {
+                    userResult = data?.content?.filter((user) => user.email == inputValue);
+                    setCollection(userResult);
+            } else setCollection(data?.content?.slice(0, countPerPage))
         } catch (error) {
             setErrorAPI(error);
         }
     }
     useEffect(()=>{
-        getListUser(current);
-    },[current]);
+        getListUser();
+    },[inputValue]);
+    const [errorAPI, setErrorAPI] = useState([]);
+    // console.log("inputValue: ",inputValue);
+    const [show, setShow] = useState(false);
+    // cài đặt Pagination
+    const PaginationChange = (page) => {
+        setCurrent(page);
+        const to = countPerPage * page;
+        const from = to - countPerPage;
+        setCollection((listUser.slice(from, to)));
+    }
 
     const onSubmit = async (value) => {
         // console.log(value);
         try {
             let data = null;
             if(show.key === 'update') {data = await apiUpdateInfoUser(value)};
-            console.log('data: ',data);
+            // console.log('data: ',data);
             Swal.fire({
                 title: `Bạn đã update thành công ID: ${data?.data.content.id}`,
                 text: "Nhấn Ok để tiếp tục!",
@@ -54,7 +66,7 @@ function ListUser() {
                 }
               })
         } catch (error) {
-            console.log('error: ',error);
+            // console.log('error: ',error);
             Swal.fire({
                 title: error?.message,
                 text: `${error?.response?.data?.content} !!`,
@@ -65,9 +77,16 @@ function ListUser() {
     };
     const onError = (err) => {
         console.log(err);
-    }
+    };
 
-    // xóa tài khoản
+    const handleInput = evt => {
+        // console.log(evt.target);
+        if (evt?.key === 'Enter' || evt?.key === 'Tab') {
+          setInputValue(evt?.target?.value);
+        }
+      };
+    //   console.log("listUser: ",listUser);
+    
     const handleRemove = async (id) => {
         try {
             const data = await apiRemoveUser(id);
@@ -97,7 +116,8 @@ function ListUser() {
     const handleUpdateUser = (user) => {
         // console.log(user);
         setShow({key: 'update', value: user});
-    }
+    };
+
     return (
         <div className='listUser w-100'>
             <h2 className='title'>Quản lý danh sách User</h2>
@@ -108,6 +128,7 @@ function ListUser() {
                     className="form-control" 
                     placeholder="Nhập email và nhấn Enter..." 
                     name="inputValue"
+                    onKeyDown={handleInput}
                 />
                 </div>
                 <button className='btnPrimary' onClick={()=>navigate('/add-user')}>Thêm User</button>
@@ -132,7 +153,7 @@ function ListUser() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {listUser?.data?.map((user, index) => {
+                                    {collection?.map((user, index) => {
                                         return(
                                             <tr key={index}>
                                                 <td>{(current - 1)*10 + index+1}</td>
@@ -153,14 +174,17 @@ function ListUser() {
                                     })}
                                 </tbody>
                             </table>
+                        {!userResult?.length && <p className='text-center text-danger'>Không tìm thấy tài khoản</p>}
+                        {!inputValue && 
                             <Pagination
                                 className="pagination"
                                 onChange={PaginationChange}
-                                total={Math.ceil(listUser.totalRow / 10)}
+                                total = {listUser?.length}
                                 // ko thể thiếu current
                                 current={current}
-                                pageSize={1}
+                                pageSize={countPerPage}
                                 />
+                        }
                         </div>
                     </div>
                 </div>
